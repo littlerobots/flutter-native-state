@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="nl.littlerobots.flutter">
+
+    <application android:name="nl.littlerobots.flutter.native_state.FlutterNativeStateApplication" />
+</manifest>
