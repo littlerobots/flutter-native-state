@@ -1,4 +1,4 @@
-# Flutter `native_state` plugin
+# Flutter native_state plugin
 
 This plugin allows for restoring state after the app process is killed while in the background.
 
@@ -12,14 +12,14 @@ the OS may decide that there's not enough resources to keep the app running and 
 restore any state when relaunching the app after that phone call, which means that whatever the user has entered has now been lost. 
 Worse yet, the app will just restart and show the home screen which can be confusing to the user as well.
 
-## Saving state using `native_state`
+## Saving state
 First of all: the term "state" may be confusing, since it can mean many things. In this case _state_ means: the *bare minimum* 
 amount of data you need to make it appear that the app was never killed. Generally this means that you should only persist things like
 data being entered by the user, or an id that identifies whatever was displayed on the screen. For example, if your app is showing 
 a shopping cart, only the shopping cart id should be persisted using this plugin, the shopping cart contents related to this id 
 should be loaded by other means (from disk, or from the network).
 
-### Integrating `native_state` for Flutter projects on Android
+### Integrating with Flutter projects on Android
 This plugin uses Kotlin, make sure your Flutter project has Kotlin configured for that reason.
 
 Find the `AndroidManifest.xml` file in `app/src/main` of your Flutter project. Then *remove* the `name` attribute from the 
@@ -33,7 +33,7 @@ When not removed, you'll get a compilation error similar like this:
 >  	is also present at [:native_state] AndroidManifest.xml:7:18-99 value=(nl.littlerobots.flutter.native_state.FlutterNativeStateApplication).
 >  	Suggestion: add 'tools:replace="android:name"' to <application> element at AndroidManifest.xml:9:5-32:19 to override.
 
-### Integrating `native_state` for Flutter project on iOS
+### Integrating with Flutter project on iOS
 This plugin uses Swift, make sure your project is configured to use Swift for that reason.
 
 Your `AppDelegate.swift` in the `ios/Runner` directory should look like this:
@@ -72,7 +72,7 @@ Your `AppDelegate.swift` in the `ios/Runner` directory should look like this:
    }
 ```
 
-## Using `native_state`
+## Using the plugin
 The `SavedStateData` class allows for storing data by key and value. To get access to `SavedStateData` wrap your 
 main application in a `SavedState` widget; this is the global application `SavedState` widget. To retrieve the `SavedStateData` 
 use `SavedState.of(BuildContext)` or use the `SavedState.builder()` to get the data in a builder.
@@ -111,3 +111,23 @@ to respect that, in stead of _always_ restoring the app state.
 For both Android and iOS: start your app and send it to the background by pressing the home button or using a gesture. Then 
 from XCode or Android Studio, kill the app process and restart the app from the launcher. The app should resume from the same 
 state as when it was killed.
+
+### When is state cleared by the OS
+For Android: when the user "exits" the app by pressing back, and at the discretion of the OS when the app is in the background.
+
+For iOS: users cannot really "exit" an app on iOS, but state is cleared when the user swipes away the app in the app switcher.
+
+## License
+```Copyright 2019 Little Robots
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.```

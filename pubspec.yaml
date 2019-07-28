@@ -1,8 +1,8 @@
 name: native_state
 description: Stores persistent state that can be restored when the app is relaunched after the process was killed.
 version: 0.0.1
-author:
-homepage:
+author: Hugo Visser <hugo@littlerobots.nl>
+homepage: https://github.com/littlerobots/flutter-native-state
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
