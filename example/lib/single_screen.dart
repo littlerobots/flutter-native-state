@@ -3,7 +3,7 @@ import 'package:native_state/native_state.dart';
 
 /// Demo to show that you can apply [SavedState] to a single widget.
 /// In the more common case, you'd want to wrap [MaterialApp] in [SavedState] too
-/// so that navigation can also be restored. In that case
+/// so that navigation can also be restored.
 void main() => runApp(MaterialApp(
       routes: {
         AnotherCounter.route: (context) => SavedState(child: AnotherCounter())

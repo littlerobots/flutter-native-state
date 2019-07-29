@@ -129,9 +129,7 @@ class _InheritedSavedState extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) {
     var widget = oldWidget as _InheritedSavedState;
     // Only notify when the state has been initialised (restored)
-    var shouldNotify = !widget.savedState.initialised && savedState.initialised;
-    debugPrint("Should notify = $shouldNotify");
-    return shouldNotify;
+    return !widget.savedState.initialised && savedState.initialised;
   }
 
   static SavedStateData of(BuildContext context) {

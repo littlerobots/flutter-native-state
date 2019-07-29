@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:native_state/src/platform.dart';
 
 class SavedStateData {
@@ -100,7 +99,6 @@ class SavedStateData {
 
   Future<SavedStateData> _load() async {
     var data = await FlutterNativeState.get();
-    debugPrint("Restore from OS: $data");
     _data.addAll(data);
     _initialised = true;
     return this;
