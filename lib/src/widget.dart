@@ -8,7 +8,7 @@ typedef WidgetStateBuilder = Widget Function(
 /// When the widget is removed from the tree, the associated [SavedStateData]
 /// will be cleared using it's `clear()` method.
 ///
-/// [SavedState] widgets can be nested each widget that is not the root creates a
+/// [SavedState] widgets can be nested. Each widget that is not the root creates a
 /// named nested [SavedStateData] using [SavedStateData.child].
 /// By the default, the name associated with the child will be the current route name.
 /// A name can also be supplied by setting the [name] property.
