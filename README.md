@@ -33,6 +33,9 @@ When not removed, you'll get a compilation error similar like this:
 >  	is also present at [:native_state] AndroidManifest.xml:7:18-99 value=(nl.littlerobots.flutter.native_state.FlutterNativeStateApplication).
 >  	Suggestion: add 'tools:replace="android:name"' to <application> element at AndroidManifest.xml:9:5-32:19 to override.
 
+If you prefer to use your own application class, add the `tools:replace="android:name"` attribute to `AndroidManifest.xml` as suggested in the error message, 
+and call `StateRegistry.registerCallbacks()` from your `Application` class.
+
 ### Integrating with Flutter project on iOS
 This plugin uses Swift, make sure your project is configured to use Swift for that reason.
 
@@ -79,20 +82,22 @@ use `SavedState.of(BuildContext)` or use the `SavedState.builder()` to get the d
 
 `SavedState` widgets manage the saved state. When they are disposed, the associated state is also cleared. Usually you want to 
 wrap each page in your application that needs to restore some state in a `SavedState` widget. When the page is no longer displayed, the
-`SavedState` associated with the page is automatically cleared.
+`SavedState` associated with the page is automatically cleared. `SavedState` widgets can be nested multiple times, creating nested 
+`SavedStateData` that will be cleared when a parent of the `SavedStateData` is cleared, for example, when the `SavedState` widget is removed
+from the widget tree.
 
 ## Saving and Restoring state in `StatefulWidgets`
 Most of the time, you'd want your `StatefulWidget`s to update the `SavedState`. Use `SavedState.of(context)` then call `state.putXXX(key, value)` to
 update the state.
 
-To restore state in your `StatefulWidget` add the `SavedStateHandler` mixin to your `State` class. Then implement the `restoreState(SavedState)` 
+To restore state in your `StatefulWidget` add the `StateRestoration` mixin to your `State` class. Then implement the `restoreState(SavedState)` 
 method this will be called once when your widget is mounted.
 
 ## Restoring navigation state
 Restoring the page state is one part of the equation, but when the app is restarted, by default it will start with the default route, 
 which is probably not what you want. The plugin provides the `SavedStateNavigationObserver` that will save the route to the 
 `SavedState` automatically. The saved route can then be retrieved using `restoreRoute(SavedState)` static method. *Important note:* for
-this to work you need to setup your routes in such a way that the `Navigator` will restore then when you [set the `initialRoute` property](https://api.flutter.dev/flutter/widgets/Navigator/initialRoute.html).
+this to work you need to setup your routes in such a way that the `Navigator` will restore them when you [set the `initialRoute` property](https://api.flutter.dev/flutter/widgets/Navigator/initialRoute.html).
 
 ## FAQ
 ### Why do I need this at all? My apps never get killed in the background

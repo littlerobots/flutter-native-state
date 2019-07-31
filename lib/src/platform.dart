@@ -1,6 +1,6 @@
-import 'package:flutter/services.dart';
+part of native_state;
 
-class FlutterNativeState {
+class _FlutterNativeState {
   static const MethodChannel _channel =
       const MethodChannel('nl.littlerobots.flutter/native_state');
 

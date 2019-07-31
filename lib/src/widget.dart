@@ -1,18 +1,25 @@
-import 'package:flutter/widgets.dart';
-import 'package:native_state/src/data.dart';
+part of native_state;
 
 typedef WidgetStateBuilder = Widget Function(
     BuildContext context, SavedStateData savedState);
 
+/// Provides the [SavedStateData] to the widget tree.
+///
+/// When the widget is removed from the tree, the associated [SavedStateData]
+/// will be cleared using it's `clear()` method.
+///
+/// [SavedState] widgets can be nested each widget that is not the root creates a
+/// named nested [SavedStateData] using [SavedStateData.child].
+/// By the default, the name associated with the child will be the current route name.
+/// A name can also be supplied by setting the [name] property.
+///
 class SavedState extends StatelessWidget {
   final Widget child;
+  final String name;
 
-  String get _name =>
-      key is ValueKey<String> ? (key as ValueKey<String>).value : null;
+  SavedState({Key key, this.name, @required this.child}) : super(key: key);
 
-  SavedState({Key key, @required this.child}) : super(key: key);
-
-  SavedState.builder({Key key, @required WidgetStateBuilder builder})
+  SavedState.builder({Key key, this.name, @required WidgetStateBuilder builder})
       : child = LayoutBuilder(
           builder: (context, _) => builder(context, SavedState.of(context)),
         ),
@@ -28,7 +35,10 @@ class SavedState extends StatelessWidget {
       );
     } else {
       // scope the state using the name if a key is supplied, or by the route name otherwise
-      var name = _name ?? ModalRoute.of(context).settings.name;
+      var name = this.name ?? ModalRoute
+          .of(context)
+          .settings
+          .name;
       assert(name != null);
 
       return _SavedStateDisposer(
@@ -51,25 +61,19 @@ class _RootSavedState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var initial = SavedStateData.initial();
     return FutureBuilder(
       future: SavedStateData.restore(),
-      initialData: initial,
+      initialData: SavedStateData._(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          SavedStateData result = snapshot.data;
-          if (result.isEmpty) {
-            // return the initial empty state, this prevents a rebuild
-            initial.activate();
-            return _SavedStateDisposer(child: child, savedState: initial);
-          }
-        }
         return _SavedStateDisposer(child: child, savedState: snapshot.data);
       },
     );
   }
 }
 
+/// Mixin that supplies [SavedStateData] to a [StatefulWidget]s [State] class.
+/// The widget tree must contain a [SavedState] widget that is a parent of the [StatefulWidget]
+/// to locate the [SavedStateData].
 mixin StateRestoration<T extends StatefulWidget> on State<T> {
   bool _didRestoreState = false;
 
@@ -80,7 +84,7 @@ mixin StateRestoration<T extends StatefulWidget> on State<T> {
 
     assert(state != null);
 
-    if (state.initialised && !_didRestoreState) {
+    if (state._restored && !_didRestoreState) {
       restoreState(state);
       _didRestoreState = true;
     }
@@ -128,8 +132,8 @@ class _InheritedSavedState extends InheritedWidget {
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
     var widget = oldWidget as _InheritedSavedState;
-    // Only notify when the state has been initialised (restored)
-    return !widget.savedState.initialised && savedState.initialised;
+    // Only notify when the state has been restored
+    return !widget.savedState._restored && savedState._restored;
   }
 
   static SavedStateData of(BuildContext context) {

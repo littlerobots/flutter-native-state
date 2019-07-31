@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:native_state/src/data.dart';
+import 'package:native_state/native_state.dart';
 
 class SavedStateRouteObserver extends RouteObserver<PageRoute<dynamic>> {
   final SavedStateData savedState;
