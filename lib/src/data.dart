@@ -88,10 +88,8 @@ class SavedStateData {
   }
 
   List<Map<dynamic, dynamic>> _collectChildren(Map<dynamic, dynamic> map) {
-    List<Map<dynamic, dynamic>> children = map.values.where((v) =>
-    v is Map<
-        dynamic,
-        dynamic>).toList().cast();
+    List<Map<dynamic, dynamic>> children =
+    map.values.where((v) => v is Map<dynamic, dynamic>).toList().cast();
     List<Map<dynamic, dynamic>> nested = [];
     children.forEach((child) {
       nested.addAll(_collectChildren(child));
