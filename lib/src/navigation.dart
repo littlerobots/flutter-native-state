@@ -4,7 +4,8 @@ import 'package:native_state/native_state.dart';
 class SavedStateRouteObserver extends RouteObserver<PageRoute<dynamic>> {
   final SavedStateData savedState;
 
-  SavedStateRouteObserver({this.savedState});
+  SavedStateRouteObserver({@required this.savedState})
+      : assert(savedState != null);
 
   @override
   void didPop(Route route, Route previousRoute) {
