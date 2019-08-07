@@ -8,11 +8,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var savedState = SavedState.of(context);
     debugPrint("rebuild app");
-    var navigatorKey = GlobalKey<NavigatorState>();
     // Navigator will set up the correct route history if they are structured in a hierarchical way.
     // See https://api.flutter.dev/flutter/widgets/Navigator/initialRoute.html
     return MaterialApp(
-      navigatorKey: navigatorKey,
+      // for restoring navigator state, you'll need to set a navigator key!
+      navigatorKey: GlobalKey(),
       // Setup an observer that will save the current route into the saved state
       navigatorObservers: [SavedStateRouteObserver(savedState: savedState)],
       routes: {
