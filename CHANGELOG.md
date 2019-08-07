@@ -1,4 +1,5 @@
 ## 0.0.3
+* Added `SavedState.value` for passing down `SavedStateData` without automatically clearing it.
 
 ## 0.0.2
 * Removed non-essential public methods from `SavedStateData`
