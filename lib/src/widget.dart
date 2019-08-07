@@ -16,17 +16,62 @@ typedef WidgetStateBuilder = Widget Function(
 class SavedState extends StatelessWidget {
   final Widget child;
   final String name;
+  final SavedStateData _data;
 
-  SavedState({Key key, this.name, @required this.child}) : super(key: key);
+  /// Create a [SavedState] widget with the given [child] widget and an optional [name]
+  /// that is passed to [SavedStateData.child].
+  ///
+  /// If the [name] is not supplied and there's a parent [SavedState] in the widget tree,
+  /// then the current route name will be used.
+  ///
+  /// When this widget is removed from the widget tree, [SavedStateData.clear] will be called
+  /// on the associated [SavedStateData].
+  ///
+  /// If this there's no parent [SavedState] in the widget tree, the [name] will be ignored and
+  /// this [SavedState] will initialise the root [SavedStateData].
+  ///
+  SavedState({Key key, this.name, @required this.child})
+      : this._data = null,
+        super(key: key);
 
+  /// Create a [SavedState] widget and supply the [SavedStateData] using the [builder] function.
+  /// An optional [name] can be supplied, which will be passed to [SavedStateData.child]
+  ///
+  /// If the [name] is not supplied and there's a parent [SavedState] in the widget tree,
+  /// then the current route name will be used.
+  ///
+  /// When this widget is removed from the widget tree, [SavedStateData.clear] will be called
+  /// on the associated [SavedStateData].
+  ///
+  /// If this there's no parent [SavedState] in the widget tree, the [name] will be ignored and
+  /// this [SavedState] will initialise the root [SavedStateData].
+  ///
   SavedState.builder({Key key, this.name, @required WidgetStateBuilder builder})
       : child = LayoutBuilder(
           builder: (context, _) => builder(context, SavedState.of(context)),
         ),
+        _data = null,
+        super(key: key);
+
+  /// Create a [SavedState] widget with the supplied [savedState].
+  ///
+  /// The [SavedStateData] will not be managed by this widget and will not be
+  /// cleared when the widget is removed from the tree. This can be used to share
+  /// the same [SavedStateData.child] between routes, manually calling
+  /// [SavedStateData.clear] when appropriate.
+  ///
+  SavedState.value(
+      {Key key, @required SavedStateData savedState, @required this.child})
+      : this._data = savedState,
+        this.name = null,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (_data != null) {
+      return _InheritedSavedState(child: child, savedState: _data);
+    }
+
     var parent = _InheritedSavedState.of(context);
     // we are the root and need to load the state before exposing it.
     if (parent == null) {
@@ -39,6 +84,7 @@ class SavedState extends StatelessWidget {
           .of(context)
           .settings
           .name;
+
       assert(name != null);
 
       return _SavedStateDisposer(
