@@ -1,5 +1,6 @@
-## 0.0.3
+## 1.0.0-rc01
 * Added `SavedState.value` for passing down `SavedStateData` without automatically clearing it.
+* Added new sample for `SavedState.value`
 
 ## 0.0.2
 * Removed non-essential public methods from `SavedStateData`

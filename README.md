@@ -91,7 +91,7 @@ Most of the time, you'd want your `StatefulWidget`s to update the `SavedState`. 
 update the state.
 
 To restore state in your `StatefulWidget` add the `StateRestoration` mixin to your `State` class. Then implement the `restoreState(SavedState)` 
-method this will be called once when your widget is mounted.
+method. This method will be called once when your widget is mounted.
 
 ## Restoring navigation state
 Restoring the page state is one part of the equation, but when the app is restarted, by default it will start with the default route, 
@@ -138,4 +138,5 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.```
+limitations under the License.
+```
