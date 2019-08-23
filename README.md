@@ -95,7 +95,7 @@ method. This method will be called once when your widget is mounted.
 
 ## Restoring navigation state
 Restoring the page state is one part of the equation, but when the app is restarted, by default it will start with the default route, 
-which is probably not what you want. The plugin provides the `SavedStateNavigationObserver` that will save the route to the 
+which is probably not what you want. The plugin provides the `SavedStateRouteObserver` that will save the route to the 
 `SavedState` automatically. The saved route can then be retrieved using `restoreRoute(SavedState)` static method. *Important note:* for
 this to work you need to setup your routes in such a way that the `Navigator` will restore them when you [set the `initialRoute` property](https://api.flutter.dev/flutter/widgets/Navigator/initialRoute.html).
 
