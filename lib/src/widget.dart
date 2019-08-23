@@ -80,10 +80,7 @@ class SavedState extends StatelessWidget {
       );
     } else {
       // scope the state using the name if a key is supplied, or by the route name otherwise
-      var name = this.name ?? ModalRoute
-          .of(context)
-          .settings
-          .name;
+      var name = this.name ?? ModalRoute.of(context).settings.name;
 
       assert(name != null);
 
