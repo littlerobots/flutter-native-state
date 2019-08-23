@@ -1,3 +1,6 @@
+## 1.0.0
+* No changes from rc01
+
 ## 1.0.0-rc01
 * Added `SavedState.value` for passing down `SavedStateData` without automatically clearing it.
 * Added new sample for `SavedState.value`
