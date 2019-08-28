@@ -1,4 +1,5 @@
 # Flutter native_state plugin
+[![Pub](https://img.shields.io/pub/v/native_state.svg)](https://pub.dartlang.org/packages/native_state)
 
 This plugin allows for restoring state after the app process is killed while in the background.
 
