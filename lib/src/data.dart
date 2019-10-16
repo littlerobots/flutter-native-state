@@ -79,6 +79,17 @@ class SavedStateData {
     return _putValue(key, value);
   }
 
+  /// Remove key with value if it exists. 
+  /// Returns delete status (removed or not)
+  Future<bool> remove(String key) async {
+    if (_getValue(key) != null) {
+      await _putValue(key, null);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   /// Clear all data. [SavedStateData]s can be nested when created using [child]. Calling [clear] on
   /// any parent, will clear all children data.
   Future<void> clear() {
