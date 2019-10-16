@@ -79,8 +79,8 @@ class SavedStateData {
     return _putValue(key, value);
   }
 
-  /// Remove key with value if it exists. 
-  /// Returns delete status (removed or not)
+  /// Remove the value with the specified [key]
+  /// Returns true if the value was removed, false otherwise
   Future<bool> remove(String key) async {
     if (_getValue(key) != null) {
       await _putValue(key, null);
