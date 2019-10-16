@@ -1,4 +1,5 @@
 ## 1.0.1
+* Added `SavedStateData.remove()` to remove values by key
 
 ## 1.0.0
 * No changes from rc01
