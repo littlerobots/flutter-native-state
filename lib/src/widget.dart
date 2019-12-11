@@ -181,7 +181,7 @@ class _InheritedSavedState extends InheritedWidget {
 
   static SavedStateData of(BuildContext context) {
     _InheritedSavedState widget =
-        context.inheritFromWidgetOfExactType(_InheritedSavedState);
+    context.dependOnInheritedWidgetOfExactType();
     return widget?.savedState;
   }
 }

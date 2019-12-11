@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:native_state/native_state.dart';
 
@@ -7,6 +8,7 @@ void main() {
   Map<dynamic, dynamic> savedState = {};
 
   setUpAll(() {
+    WidgetsFlutterBinding.ensureInitialized();
     savedState.clear();
     MethodChannel('nl.littlerobots.flutter/native_state')
         .setMockMethodCallHandler((MethodCall methodCall) async {
