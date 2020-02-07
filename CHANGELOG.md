@@ -1,6 +1,7 @@
+## 1.0.3
+
 ## 1.0.2
 * Use `dependOnInheritedWidgetOfExactType` in stead of the deprecated `inheritFromWidgetOfExactType`
-
 
 ## 1.0.1
 * Added `SavedStateData.remove()` to remove values by key
