@@ -22,20 +22,9 @@ should be loaded by other means (from disk, or from the network).
 
 ### Integrating with Flutter projects on Android
 This plugin uses Kotlin, make sure your Flutter project has Kotlin configured for that reason.
+No other setup is required.
 
-Find the `AndroidManifest.xml` file in `app/src/main` of your Flutter project. Then *remove* the `name` attribute from the 
-`<application>` tag:
-
->  <application ~~android:name="io.flutter.app.FlutterApplication"~~ ...>
-
-When not removed, you'll get a compilation error similar like this:
-
-> Attribute application@name value=(io.flutter.app.FlutterApplication) from AndroidManifest.xml:10:9-57
->  	is also present at [:native_state] AndroidManifest.xml:7:18-99 value=(nl.littlerobots.flutter.native_state.FlutterNativeStateApplication).
->  	Suggestion: add 'tools:replace="android:name"' to <application> element at AndroidManifest.xml:9:5-32:19 to override.
-
-If you prefer to use your own application class, add the `tools:replace="android:name"` attribute to `AndroidManifest.xml` as suggested in the error message, 
-and call `StateRegistry.registerCallbacks()` from your `Application` class.
+Note that as of version 1.1.0, Flutter version 1.12 or up is required.
 
 ### Integrating with Flutter project on iOS
 This plugin uses Swift, make sure your project is configured to use Swift for that reason.
