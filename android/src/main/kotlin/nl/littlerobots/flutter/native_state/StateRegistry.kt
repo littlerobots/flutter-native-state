@@ -1,26 +1,29 @@
 package nl.littlerobots.flutter.native_state
 
 import android.app.Activity
-import android.app.Application
 import android.os.Bundle
 
 /**
  * Holder for state that will be saved to a bundle when [Activity.onSaveInstanceState] is called.
  */
 object StateRegistry {
-    private val state = mutableMapOf<String, Any?>()
+    private val activityState = mutableMapOf<String, MutableMap<String, Any?>>()
 
-    fun onSaveInstanceState(outState: Bundle) {
-        outState.putBundle("flutter_state", state.toBundle())
+    fun onSaveInstanceState(activity: Activity, outState: Bundle) {
+        val state = activityState[activity.javaClass.name]
+        state?.let {
+            outState.putBundle("flutter_state", it.toBundle())
+        }
     }
 
-    fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        state.clear()
+    fun onRestoreInstanceState(activity: Activity, savedInstanceState: Bundle?) {
+        val state = activityState.getOrPut(activity.javaClass.name) { mutableMapOf() }
         val flutterState = savedInstanceState?.getBundle("flutter_state")
         flutterState?.let { state.putAll(it.toMap()) }
     }
 
-    fun setState(stateMap: Map<String, Any?>?) {
+    fun setState(activity: Activity, stateMap: Map<String, Any?>?) {
+        val state = activityState.getOrPut(activity.javaClass.name) { mutableMapOf() }
         stateMap?.let { validateStateMap(it) }
         state.clear()
         stateMap?.let { state.putAll(stateMap) }
@@ -43,6 +46,7 @@ object StateRegistry {
             is Double,
             is String -> true
             is Map<*, *> -> {
+                @Suppress("UNCHECKED_CAST")
                 validateStateMap(value as Map<String, Any?>)
                 true
             }
@@ -50,37 +54,12 @@ object StateRegistry {
         }
     }
 
-    fun getState(): Map<String, Any?> {
-        return state
+    fun clear(activity: Activity) {
+        activityState.remove(activity.javaClass.name)
     }
 
-    fun registerCallbacks(application: Application) {
-        application.registerActivityLifecycleCallbacks(LifecycleCallbacks())
-    }
-}
-
-private class LifecycleCallbacks : Application.ActivityLifecycleCallbacks {
-    override fun onActivityPaused(activity: Activity?) {
-    }
-
-    override fun onActivityResumed(activity: Activity?) {
-    }
-
-    override fun onActivityStarted(activity: Activity?) {
-    }
-
-    override fun onActivityDestroyed(activity: Activity?) {
-    }
-
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        StateRegistry.onSaveInstanceState(outState)
-    }
-
-    override fun onActivityStopped(activity: Activity?) {
-    }
-
-    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-        StateRegistry.onRestoreInstanceState(savedInstanceState)
+    fun getState(activity: Activity): Map<String, Any?> {
+        return activityState[activity.javaClass.name] ?: emptyMap()
     }
 }
 
