@@ -1,3 +1,5 @@
+# 1.1.1
+
 ## 1.1.0
 * Switches to the new Android plugin API and requires Flutter 1.12 and up, removes the requirement for additional
 setup for Android. Make sure you [migrate your project](https://flutter.dev/go/android-project-migration) 
