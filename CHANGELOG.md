@@ -1,8 +1,8 @@
 ## 1.1.0
-* Uses the new Android plugin API and requires Flutter 1.12 and up, removes the requirement for additional
-setup for Android.
+* Switches to the new Android plugin API and requires Flutter 1.12 and up, removes the requirement for additional
+setup for Android. Make sure you [migrate your project](https://flutter.dev/go/android-project-migration) 
+before using this version.
 * State is now recorded per activity on Android to better support embedding.
-
 
 ## 1.0.2
 * Use `dependOnInheritedWidgetOfExactType` in stead of the deprecated `inheritFromWidgetOfExactType`

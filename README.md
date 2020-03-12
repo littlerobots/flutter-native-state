@@ -24,7 +24,8 @@ should be loaded by other means (from disk, or from the network).
 This plugin uses Kotlin, make sure your Flutter project has Kotlin configured for that reason.
 No other setup is required.
 
-Note that as of version 1.1.0, Flutter version 1.12 or up is required.
+Note that as of version 1.1.0, Flutter version 1.12 or up is required and you should [migrate your project](https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects)
+before updating from an older version of this plugin. 
 
 ### Integrating with Flutter project on iOS
 This plugin uses Swift, make sure your project is configured to use Swift for that reason.
