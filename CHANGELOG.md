@@ -1,4 +1,5 @@
 # 1.1.1
+* Fixes a potential null pointer exception in `SavedStateRouteObserver`
 
 ## 1.1.0
 * Switches to the new Android plugin API and requires Flutter 1.12 and up, removes the requirement for additional
