@@ -9,12 +9,12 @@ class SavedStateRouteObserver extends RouteObserver<PageRoute<dynamic>> {
 
   @override
   void didPop(Route route, Route previousRoute) {
-    savedState.putString("_current_route", previousRoute.settings.name);
+    savedState.putString("_current_route", previousRoute?.settings?.name);
   }
 
   @override
   void didPush(Route route, Route previousRoute) {
-    savedState.putString("_current_route", route.settings.name);
+    savedState.putString("_current_route", route?.settings?.name);
   }
 
   @override
@@ -24,7 +24,7 @@ class SavedStateRouteObserver extends RouteObserver<PageRoute<dynamic>> {
 
   @override
   void didReplace({Route newRoute, Route oldRoute}) {
-    savedState.putString("_current_route", newRoute.settings.name);
+    savedState.putString("_current_route", newRoute?.settings?.name);
   }
 
   /// Returns the saved route name or null
