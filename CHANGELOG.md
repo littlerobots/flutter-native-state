@@ -1,3 +1,6 @@
+# next
+* Define iOS module to ensure static & framework builds work
+
 # 1.1.1
 * Fixes a potential null pointer exception in `SavedStateRouteObserver`
 
