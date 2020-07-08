@@ -50,6 +50,9 @@ void main() {
 
       observer.didPush(_MockRoute("new"), _MockRoute("old"), );
       expect(SavedStateRouteObserver.restoreRoute(state), "new");
+
+      observer.didPush(_MockRoute("below", isCurrent: false), null, );
+      expect(SavedStateRouteObserver.restoreRoute(state), "new");
     });
 
     test('didRemove saves route correctly', () async {
@@ -61,23 +64,23 @@ void main() {
 
       observer.didRemove(_MockRoute("old"), _MockRoute("new"));
       expect(SavedStateRouteObserver.restoreRoute(state), "new");
-    });
 
-    test('didReplace saves route correctly', () async {
-      var state = await SavedStateData.restore();
-      var observer = SavedStateRouteObserver(savedState: state);
-
-      observer.didReplace(oldRoute: _MockRoute("old"), newRoute: null);
-      expect(SavedStateRouteObserver.restoreRoute(state), null);
-
-      observer.didReplace(oldRoute: _MockRoute("old"), newRoute: _MockRoute("new"));
+      observer.didRemove(_MockRoute("old", isCurrent: false), _MockRoute("below", isCurrent: false));
       expect(SavedStateRouteObserver.restoreRoute(state), "new");
     });
   });
 }
 
 class _MockRoute extends PageRoute {
-  _MockRoute(String name) : super(settings: RouteSettings(name: name));
+  _MockRoute(
+    String name, {
+    bool isCurrent: true,
+  }) : _isCurrent = isCurrent,
+        super(settings: RouteSettings(name: name));
+
+  final bool _isCurrent;
+  @override
+  bool get isCurrent => _isCurrent;
 
   @override
   Color get barrierColor => throw UnimplementedError();
