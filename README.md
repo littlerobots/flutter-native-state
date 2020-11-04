@@ -32,7 +32,8 @@ This plugin uses Swift, make sure your project is configured to use Swift for th
 
 Your `AppDelegate.swift` in the `ios/Runner` directory should look like this:
 
-```import UIKit
+```swift
+   import UIKit
    import Flutter
    // add this line
    import native_state
