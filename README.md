@@ -1,6 +1,11 @@
 # Flutter native_state plugin
 [![Pub](https://img.shields.io/pub/v/native_state.svg)](https://pub.dartlang.org/packages/native_state)
 
+## Deprecation notice
+Now that Flutter officially supports state restoration through [RestorationManager](https://api.flutter.dev/flutter/services/RestorationManager-class.html)
+this plugin is no longer needed. Please switch to using the official Flutter APIs for saving state.
+
+
 This plugin allows for restoring state after the app process is killed while in the background.
 
 ## What this plugin is for
